@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
   <title>For Nikol 💌</title>
 
   <style>
@@ -27,7 +28,7 @@
       border: none;
       border-radius: 25px;
       cursor: pointer;
-      transition: 0.3s;
+      transition: 0.3s ease;
     }
 
     #yes {
@@ -48,8 +49,9 @@
     .heart {
       position: fixed;
       top: -10px;
-      font-size: 20px;
+      font-size: 22px;
       animation: fall linear forwards;
+      pointer-events: none;
     }
 
     @keyframes fall {
@@ -62,79 +64,91 @@
 </head>
 
 <body>
+
+<!-- 🎵 Background Music -->
 <audio id="bgMusic" loop>
-  <source src="Valentino 24kGOLD.mp3" type="audio/mpeg">
+  <source src="valentino.mp3" type="audio/mpeg">
 </audio>
 
-<h1>Hey Nikol 💖</h1>
-<h2>Will you be my Valentine?</h2>
+<div id="content">
+  <h1>Hey Nikol 💖</h1>
+  <h2>Will you be my Valentine?</h2>
 
-<button id="yes" onclick="yesClicked()">Yes 💘</button>
-<button id="no" onmouseover="moveButton()">No 😢</button>
+  <button id="yes">Yes 💘</button>
+  <button id="no">No 😢</button>
+</div>
 
 <script>
+  const yesBtn = document.getElementById("yes");
+  const noBtn = document.getElementById("no");
+  const content = document.getElementById("content");
+  const music = document.getElementById("bgMusic");
 
-let scale = 1;
-let yesSize = 18;
+  let scale = 1;
+  let yesSize = 18;
 
-function moveButton() {
-  const noButton = document.getElementById("no");
+  // 😈 No button runs away
+  noBtn.addEventListener("mouseover", () => {
+    noBtn.style.top = Math.random() * 400 + "px";
+    noBtn.style.left = Math.random() * 400 + "px";
 
-  noButton.style.top = Math.random() * 400 + "px";
-  noButton.style.left = Math.random() * 400 + "px";
+    // Shrink No
+    scale = Math.max(0.3, scale - 0.1);
+    noBtn.style.transform = `scale(${scale})`;
 
-  // Shrink the No button
-  scale -= 0.1;
-  if (scale > 0.3) {
-    noButton.style.transform = "scale(" + scale + ")";
+    // Grow Yes
+    yesSize += 5;
+    yesBtn.style.fontSize = yesSize + "px";
+  });
+
+  // 💖 Yes clicked
+  yesBtn.addEventListener("click", () => {
+    playMusic();
+    showFinalMessage();
+    startHearts();
+  });
+
+  function playMusic() {
+    music.volume = 0;
+    music.play();
+
+    let fade = setInterval(() => {
+      if (music.volume < 0.9) {
+        music.volume += 0.05;
+      } else {
+        clearInterval(fade);
+      }
+    }, 200);
   }
 
-  // Grow the Yes button
-  yesSize += 5;
-  document.getElementById("yes").style.fontSize = yesSize + "px";
-}
+  function showFinalMessage() {
+    content.innerHTML = `
+      <h1>YAYYY ❤️</h1>
+      <h2>
+        February 16th is officially ours 💘<br>
+        <small>(a man’s got business to attend to on the 14th)</small>
+      </h2>
+    `;
+  }
 
-function yesClicked() {
-  const music = document.getElementById("bgMusic");
-  music.volume = 0;
-  music.play();
+  // ❤️ Hearts
+  function createHeart() {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.textContent = "❤️";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.animationDuration = Math.random() * 3 + 2 + "s";
 
-  let fade = setInterval(() => {
-    if (music.volume < 0.9) {
-      music.volume += 0.05;
-    } else {
-      clearInterval(fade);
-    }
-  }, 200);
+    document.body.appendChild(heart);
 
-  document.body.innerHTML += `
-    <h1>YAYYY ❤️</h1>
-    <h2>February 16th is officially ours 💘(a man's got buisness to attend on the 14th)</h2>
-  `;
+    setTimeout(() => heart.remove(), 5000);
+  }
 
-  startHearts();
-}
-
-
-
-function createHeart() {
-  const heart = document.createElement("div");
-  heart.classList.add("heart");
-  heart.innerHTML = "❤️";
-  heart.style.left = Math.random() * 100 + "vw";
-  heart.style.animationDuration = Math.random() * 3 + 2 + "s";
-  document.body.appendChild(heart);
-
-  setTimeout(() => {
-    heart.remove();
-  }, 5000);
-}
-
-function startHearts() {
-  setInterval(createHeart, 200);
-}
-
+  function startHearts() {
+    setInterval(createHeart, 250);
+  }
 </script>
 
 </body>
 </html>
+
