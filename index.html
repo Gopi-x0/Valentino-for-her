@@ -62,6 +62,9 @@
 </head>
 
 <body>
+<audio id="bgMusic" loop>
+  <source src="Valentino 24kGOLD.mp3" type="audio/mpeg">
+</audio>
 
 <h1>Hey Nikol 💖</h1>
 <h2>Will you be my Valentine?</h2>
@@ -92,13 +95,27 @@ function moveButton() {
 }
 
 function yesClicked() {
-  document.body.innerHTML = `
+  const music = document.getElementById("bgMusic");
+  music.volume = 0;
+  music.play();
+
+  let fade = setInterval(() => {
+    if (music.volume < 0.9) {
+      music.volume += 0.05;
+    } else {
+      clearInterval(fade);
+    }
+  }, 200);
+
+  document.body.innerHTML += `
     <h1>YAYYY ❤️</h1>
-    <h2>February 14th is officially ours 💘</h2>
+    <h2>February 16th is officially ours 💘(a man's got buisness to attend on the 14th)</h2>
   `;
 
   startHearts();
 }
+
+
 
 function createHeart() {
   const heart = document.createElement("div");
