@@ -11,6 +11,8 @@
       background: linear-gradient(135deg, #ff9a9e, #fad0c4);
       margin-top: 100px;
       overflow: hidden;
+      transition: background 0.8s ease;
+
     }
 
     h1 {
@@ -123,14 +125,29 @@
   }
 
   function showFinalMessage() {
-    content.innerHTML = `
+  // Change background image
+  document.body.style.background = "url('valentino_dog.jpg') no-repeat center center fixed";
+  document.body.style.backgroundSize = "cover";
+
+  // Add soft dark overlay for readability
+  document.body.style.color = "white";
+
+  content.innerHTML = `
+    <div style="
+      background: rgba(0, 0, 0, 0.5);
+      padding: 30px;
+      border-radius: 20px;
+      display: inline-block;
+    ">
       <h1>YAYYY ❤️</h1>
       <h2>
         February 16th is officially ours 💘<br>
-        <small>(Fuck he 14th we create our own day.)</small>
+        <small>(a man’s got business to attend to on the 14th)</small>
       </h2>
-    `;
-  }
+    </div>
+  `;
+}
+
 
   // ❤️ Hearts
   function createHeart() {
